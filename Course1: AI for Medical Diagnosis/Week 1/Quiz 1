@@ -1,0 +1,109 @@
+1. Which of the following is NOT one of the key challenges for AI diagnostic algorithms that is discussed in the lecture? 
+=Inflexible models
+
+2. You find that your training set has 70% negative examples and 30% positive.
+Which of the following techniques will NOT help for training this imbalanced dataset?
+= Oversampling negative examples
+
+N.B.Given that the model is being trained on more negative examples, 
+sampling even more negative samples will bias the model even more towards making a negative prediction.  
+
+
+Quiz 1, Question 3
+========================
+
+3.Question 3
+What is the total loss from the normal (non-mass) examples in this example dataset?
+
+Please use the natural logarithm in your calculation. When you use numpy.log, this is using the natural logarithm. Also, to get the total loss, please add up the losses from each ‘normal’ example.
+
+Example	     P(positive)
+P1 Normal	       0.6
+P3 Normal	       0.3
+P5 Mass	         0.4
+
+=1.27
+
+Python Code
+===============
+
+# Generate an array of 4 binary label values, 3 positive and 1 negative
+new_Array = np.array(
+        [[0],
+         [0],
+         [1]])
+print(f"new_Array: \n{new_Array}")
+print()
+
+# Make model predictions that are always 0.9 for all examples
+new_Pred = np.array(
+        [[0.6],
+         [0.3],
+         [0.4]])
+print(f"new_Pred: \n{new_Pred}")
+print()
+
+loss_new = -1 * np.sum(new_Array * np.log(new_Pred)) + \
+                -1 * np.sum((1 - new_Array) * np.log(1 - new_Pred))
+print(f"loss_new: {loss_new:.4f}")
+
+
+
+Answers:
+===================
+
+new_Array: 
+[[0]
+ [0]
+ [1]]
+
+new_Pred: 
+[[0.6]
+ [0.3]
+ [0.4]]
+
+loss_new: 2.1893
+# Incorrect
+Please sum up the losses from just the normal, non-disease examples.  
+The value here is the sum of the losses from all examples (including the mass example). 
+
+
+4. What is the typical size of medical image dataset?
+=~10 thousand to 100 thousand  images
+
+#Most often datasets will range from 10,000 to 100,000 labeled images. 
+Fewer than 1000 is typically too few to train, validate and test a classifier,
+and very few datasets will have millions of images due to the cost of labeling.
+
+5.Which of the following data augmentations would be best to apply?
+= Rotated Image, not the lateral invertion to avoid Dextrocardia medical condition
+
+#This rotation is most likely to help. 
+This is a realistic transformation. Also, it does not risk changing the label.
+
+6. Which of the following are valid methods for determining ground truth?  Choose all that apply.
+= Confirmation by CT scan + Biopsy + Consensus voting from a board of doctors
+
+7.In what order should the training, validation, and test sets be sampled?
+= Test, Validatation, Training.
+
+#The test set is the one that is going to be used for the final evaluation of the model. 
+So you need to make sure that this set (more than any other one) has enough samples of the classes.
+
+8. Why is it bad to have the same patients in both training and test sets?
+= Overly Optimistic Test performance
+
+#Having images from the same patient is bad 
+because it has been shown that the model may learn patient-specific features that are not generalizable to other patients.
+
+9. Let’s say you have a relatively small training set (~5 thousand images). 
+Which training strategy makes the most sense?   
+= Retraining the Last layer of a pre-trained model
+
+#By using a pre-trained model, you can make use of its ability to recognize lower level features, 
+and then fine tune the last few layers using your dataset.
+
+10. Now let’s say you have a very large dataset (~1 million images). 
+Which training strategies will make the most sense?
+= Training a model with randomly initialized weights + Retraining all layes of a pretrained model
+
